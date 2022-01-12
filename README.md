@@ -8,7 +8,7 @@ CSCI526 Team Project
 ## Yingxue Zhang
 ### Start C8 - C12
 
-## Xiaohai Shuai
+## Ruoyu Li
 ### Start C13 - C20
 
 ## Shiqi Jiang
