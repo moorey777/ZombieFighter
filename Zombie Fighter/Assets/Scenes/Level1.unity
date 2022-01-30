@@ -432,13 +432,14 @@ GameObject:
   - component: {fileID: 702928782}
   - component: {fileID: 702928785}
   - component: {fileID: 702928786}
+  - component: {fileID: 702928787}
   m_Layer: 0
   m_Name: HumanMonster
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &702928782
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -524,7 +525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702928781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.16, y: -3.02, z: 0}
+  m_LocalPosition: {x: -8.24, y: -3.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1228558571}
@@ -562,8 +563,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5220f736502cb408438fabf48bb4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {x: -5, y: -3.02, z: 0}
+  targetPosition: {x: -4, y: -3.02, z: 0}
   mySpeed: 1
+  attackCollider: {fileID: 1228558570}
+  enemyLife: 3
+  myAudioClip:
+  - {fileID: 8300000, guid: 702f3b191d44d3144a78305220ce02a5, type: 3}
+  - {fileID: 8300000, guid: 2fd32605bd32fe748ac8ff58342a9dd2, type: 3}
+--- !u!82 &702928787
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702928781}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &824964369
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,12 +881,12 @@ GameObject:
   - component: {fileID: 1228558571}
   - component: {fileID: 1228558572}
   m_Layer: 0
-  m_Name: AttactCollider
-  m_TagString: Untagged
+  m_Name: AttackCollider
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1228558571
 Transform:
   m_ObjectHideFlags: 0
@@ -812,7 +914,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.034496307, y: -0.015680194}
+  m_Offset: {x: 0.008057594, y: -0.050931573}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -823,7 +925,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.46687317, y: 0.91846347}
+  m_Size: {x: 0.41399574, y: 1.2004745}
   m_EdgeRadius: 0
 --- !u!1 &1633427200
 GameObject:
@@ -1891,6 +1993,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1475024193, guid: 3213ab9dd340eaf46afc2ff24f013091, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6841292304486675008, guid: 3213ab9dd340eaf46afc2ff24f013091, type: 3}
       propertyPath: m_Name
       value: EnemyMaleZombie
@@ -1969,6 +2075,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6841292304486675021, guid: 3213ab9dd340eaf46afc2ff24f013091, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841292304735575712, guid: 3213ab9dd340eaf46afc2ff24f013091, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

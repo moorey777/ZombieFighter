@@ -16,7 +16,8 @@ public class EnemyMaleZombie : MonoBehaviour
 
 
     protected GameObject myPlayer;
-    protected BoxCollider2D myCollider;
+
+    protected BoxCollider2D myCollider, mySward;
     protected SpriteRenderer mySr;
     [SerializeField]
     protected AudioClip[] myAudioClip;
@@ -26,6 +27,7 @@ public class EnemyMaleZombie : MonoBehaviour
     {
         myAnim = GetComponent<Animator>();
         myCollider = GetComponent<BoxCollider2D>();
+        mySward = transform.GetChild(0).GetComponent<BoxCollider2D>();
         mySr = GetComponent<SpriteRenderer>();
         myPlayer = GameObject.Find("Player");
         myAudioSource = GetComponent<AudioSource>();
@@ -194,10 +196,11 @@ public class EnemyMaleZombie : MonoBehaviour
             {
                 isAlive = false;
                 myCollider.enabled = false;
+                mySward.enabled = false;
                 myAnim.SetTrigger("Die");
                 diePosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-                dieLeftPosition = new Vector3(transform.position.x-3, transform.position.y, transform.position.z);
-                dieRightPosition = new Vector3(transform.position.x + 3, transform.position.y, transform.position.z);
+                dieLeftPosition = new Vector3(Mathf.Max(transform.position.x-3,-9.5f), transform.position.y, transform.position.z);
+                dieRightPosition = new Vector3(Mathf.Min(transform.position.x + 3,8.0f), transform.position.y, transform.position.z);
                 turnPoint = dieLeftPosition;
                 StartCoroutine("AfterDie");
             }
