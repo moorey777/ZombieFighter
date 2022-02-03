@@ -79,7 +79,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.0666667, y: 0.21333334}
+  m_Size: {x: 8.77, y: 3.36}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e68acdd28c9d94c9db81b2a55d5c2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kunaiSpeed: 10
+  kunaiSpeed: 5
 --- !u!50 &-7730755158565336131
 Rigidbody2D:
   serializedVersion: 4
@@ -136,8 +136,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.0666667, y: 0.21333334}
-    newSize: {x: 1.0666667, y: 0.21333334}
+    oldSize: {x: 0.62642854, y: 0.24}
+    newSize: {x: 8.77, y: 3.36}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
