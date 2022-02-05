@@ -58,7 +58,7 @@ public class EnemyMaleZombie : MonoBehaviour
         if (isAlive)
         {
             // ¹¥»÷
-            if (Vector3.Distance(myPlayer.transform.position, transform.position) < 1.3f)
+            if (Vector3.Distance(myPlayer.transform.position, transform.position) < 1.6f)
             {
                 if (myPlayer.transform.position.x <= transform.position.x)
                 {

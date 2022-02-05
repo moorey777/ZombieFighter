@@ -2,28 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHuman : MonoBehaviour
+public class EnemyHuman : EnemyMaleZombie
 {
 
-    public Vector3 targetPosition;
-    public float mySpeed;
-    public GameObject attackCollider;
-    public int enemyLife;
-
-    protected Animator myAnim;
-    protected Vector3 originPosition, turnPoint;
-    protected Vector3 diePosition, dieLeftPosition, dieRightPosition;
-    protected bool isFirstTimeIdle, isAfterBattleCheck, isAlive, isdieWalkLeft, canBeHurt, isFirstZombieWalk;
-
-
-    protected GameObject myPlayer;
-    protected BoxCollider2D myCollider,mySward;
     
-    protected SpriteRenderer mySr;
-    [SerializeField]
-    protected AudioClip[] myAudioClip;
-    protected AudioSource myAudioSource;
-
     private void Awake()
     {
         myAnim = GetComponent<Animator>();
@@ -54,12 +36,12 @@ public class EnemyHuman : MonoBehaviour
         MoveAndAttack();
     }
 
-    protected virtual void MoveAndAttack()
+    protected override void MoveAndAttack()
     {
         if (isAlive)
         {
             // ¹¥»÷
-            if (Vector3.Distance(myPlayer.transform.position, transform.position) < 1.3f)
+            if (Vector3.Distance(myPlayer.transform.position, transform.position) < 1.6f)
             {
                 if (myPlayer.transform.position.x <= transform.position.x)
                 {
@@ -74,9 +56,11 @@ public class EnemyHuman : MonoBehaviour
                 {
                     return;
                 }
-
+                
                 myAudioSource.PlayOneShot(myAudioClip[1]);
+               
                 myAnim.SetTrigger("Attack");
+         
                 isAfterBattleCheck = true;
                 return;
             }
@@ -156,29 +140,9 @@ public class EnemyHuman : MonoBehaviour
     }
 
 
-    protected IEnumerator TurnRight(bool turnRight)
-    {
-        yield return new WaitForSeconds(2.0f);
-        if (turnRight)
-        {
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        }
-        else
-        {
-            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-        }
-    }
+    
 
 
-    public void SetAttackColliderOn()
-    {
-        attackCollider.SetActive(true);
-    }
-
-    public void SetAttackColliderOff()
-    {
-        attackCollider.SetActive(false);
-    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
