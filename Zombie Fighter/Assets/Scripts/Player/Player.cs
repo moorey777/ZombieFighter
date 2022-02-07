@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
         mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 1.0f); // 受伤时改变透明度
     }
 
-    public void PlaySwordEffect()
+    public void PlayScratchEffect()
     {
         myAudioSource.PlayOneShot(myAudioClip[3]);
     }

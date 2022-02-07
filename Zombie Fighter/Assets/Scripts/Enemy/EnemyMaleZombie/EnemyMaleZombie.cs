@@ -55,10 +55,10 @@ public class EnemyMaleZombie : MonoBehaviour
 
     protected virtual void MoveAndAttack()
     {
-        if (isAlive)
+        if (isAlive && canBeHurt)
         {
             // ¹¥»÷
-            if (Vector3.Distance(myPlayer.transform.position, transform.position) < 1.6f)
+            if (Vector3.Distance(myPlayer.transform.position, transform.position) < 1.3f)
             {
                 if (myPlayer.transform.position.x <= transform.position.x)
                 {
@@ -74,7 +74,7 @@ public class EnemyMaleZombie : MonoBehaviour
                     return;
                 }
 
-                myAudioSource.PlayOneShot(myAudioClip[1]);
+                if (!myAudioSource.isPlaying) myAudioSource.PlayOneShot(myAudioClip[1]);
                 myAnim.SetTrigger("Attack");
                 isAfterBattleCheck = true;
                 return;
@@ -222,10 +222,21 @@ public class EnemyMaleZombie : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         mySr.material.color = new Color(1.0f, 1.0f, 1.0f, 0.2f);
         yield return new WaitForSeconds(1.0f);
+        PlayZombieBornEffect();
         myAnim.SetTrigger("AfterDie");
         mySr.material.color = new Color(1.0f, 1.0f, 1.0f, 1f);
 
         yield return new WaitForSeconds(2.0f);
 
+    }
+
+    public void PlayEnemyDeathEffect()
+    {
+        myAudioSource.PlayOneShot(myAudioClip[2]);
+    }
+
+    public void PlayZombieBornEffect()
+    {
+        myAudioSource.PlayOneShot(myAudioClip[3]);
     }
 }
