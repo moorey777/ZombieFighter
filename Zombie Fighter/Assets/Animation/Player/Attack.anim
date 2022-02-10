@@ -20,30 +20,26 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: c14fe649475469743b4f22fb79847b2d, type: 3}
-    - time: 0.04
-      value: {fileID: 21300000, guid: f2549d12c8284594f85b1f4303462072, type: 3}
-    - time: 0.08
-      value: {fileID: 21300000, guid: 6cade039cc8cb884bb37e6adf71ef25b, type: 3}
-    - time: 0.12
-      value: {fileID: 21300000, guid: fa1362671ca4f5b47afa3ac248f4e6e7, type: 3}
-    - time: 0.16
-      value: {fileID: 21300000, guid: 9ea4b8d37724dea42b8c1d8a20ef54e4, type: 3}
+      value: {fileID: 21300000, guid: 40e99003f9073420fb7fb2e6cb470570, type: 3}
+    - time: 0.1
+      value: {fileID: 21300000, guid: 775b2f125ffe945dfa7059807f3dd92d, type: 3}
     - time: 0.2
-      value: {fileID: 21300000, guid: b8525decd280a954b9cbe6ed800ab6ec, type: 3}
-    - time: 0.24
-      value: {fileID: 21300000, guid: 93d4cedae1f9f344390e122ea1493d3b, type: 3}
-    - time: 0.28
-      value: {fileID: 21300000, guid: 076a18e870d1de54c98dc14301c259b9, type: 3}
-    - time: 0.32
-      value: {fileID: 21300000, guid: 66138b1c18a964c4cb03ea1784466857, type: 3}
-    - time: 0.36
-      value: {fileID: 21300000, guid: 8be17fc4688ae304abf5c5e9246ee4ef, type: 3}
+      value: {fileID: 21300000, guid: 4b350895baeb94b35b3952406bc0ed82, type: 3}
+    - time: 0.3
+      value: {fileID: 21300000, guid: d7d854d705b884c3c87b880273c52480, type: 3}
+    - time: 0.4
+      value: {fileID: 21300000, guid: ace0499db6f3f49fa80fa195ff375ab5, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: 7c86fc1c8511a4db987b14296a607ea9, type: 3}
+    - time: 0.6
+      value: {fileID: 21300000, guid: e189a9b5b05654cb2869fddaea1daa10, type: 3}
+    - time: 0.7
+      value: {fileID: 21300000, guid: 43d2717246a6344f78beb2e4fefb1107, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 25
+  m_SampleRate: 10
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -58,22 +54,20 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: c14fe649475469743b4f22fb79847b2d, type: 3}
-    - {fileID: 21300000, guid: f2549d12c8284594f85b1f4303462072, type: 3}
-    - {fileID: 21300000, guid: 6cade039cc8cb884bb37e6adf71ef25b, type: 3}
-    - {fileID: 21300000, guid: fa1362671ca4f5b47afa3ac248f4e6e7, type: 3}
-    - {fileID: 21300000, guid: 9ea4b8d37724dea42b8c1d8a20ef54e4, type: 3}
-    - {fileID: 21300000, guid: b8525decd280a954b9cbe6ed800ab6ec, type: 3}
-    - {fileID: 21300000, guid: 93d4cedae1f9f344390e122ea1493d3b, type: 3}
-    - {fileID: 21300000, guid: 076a18e870d1de54c98dc14301c259b9, type: 3}
-    - {fileID: 21300000, guid: 66138b1c18a964c4cb03ea1784466857, type: 3}
-    - {fileID: 21300000, guid: 8be17fc4688ae304abf5c5e9246ee4ef, type: 3}
+    - {fileID: 21300000, guid: 40e99003f9073420fb7fb2e6cb470570, type: 3}
+    - {fileID: 21300000, guid: 775b2f125ffe945dfa7059807f3dd92d, type: 3}
+    - {fileID: 21300000, guid: 4b350895baeb94b35b3952406bc0ed82, type: 3}
+    - {fileID: 21300000, guid: d7d854d705b884c3c87b880273c52480, type: 3}
+    - {fileID: 21300000, guid: ace0499db6f3f49fa80fa195ff375ab5, type: 3}
+    - {fileID: 21300000, guid: 7c86fc1c8511a4db987b14296a607ea9, type: 3}
+    - {fileID: 21300000, guid: e189a9b5b05654cb2869fddaea1daa10, type: 3}
+    - {fileID: 21300000, guid: 43d2717246a6344f78beb2e4fefb1107, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.4
+    m_StopTime: 0.8
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -94,27 +88,27 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: PlaySwordEffect
+    functionName: PlayScratchEffect
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.16
+  - time: 0.2
     functionName: SetAttackColliderOn
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.28
+  - time: 0.4
     functionName: SetAttackColliderOff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.36
+  - time: 0.7
     functionName: SetIsAttackFalse
     data: 
     objectReferenceParameter: {fileID: 0}
