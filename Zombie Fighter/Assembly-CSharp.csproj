@@ -49,6 +49,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\Kunai.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyPumpkinMan\EnemyPumpkinMan.cs" />
+     <Compile Include="Assets\Scripts\Canvas.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerButtonCollider.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyFemaleZombie\EnemyFemaleZombie.cs" />
@@ -730,6 +731,16 @@
     <ProjectReference Include="Unity.2D.IK.Runtime.csproj">
       <Project>{5FCCF299-EF06-5504-FF84-9C4AE0BE36AE}</Project>
       <Name>Unity.2D.IK.Runtime</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="Cinemachine.csproj">
+      <Project>{DA770D4E-2D61-8198-AA69-7FFA5B730B53}</Project>
+      <Name>Cinemachine</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
+      <Project>{477E80FA-736E-A24E-1BF1-A0BE32A573A5}</Project>
+      <Name>com.unity.cinemachine.editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="Unity.2D.Animation.Triangle.Runtime.csproj">

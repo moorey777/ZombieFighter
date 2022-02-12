@@ -6,14 +6,20 @@ using UnityEngine.UI;
 public class Canvas : MonoBehaviour
 {
     public Text goneText;
+    public Text castleText;
+    
+
+    void Start() {
+        
+    }
 
     private void Awake() {
-        goneText.text = "0";
+        
     }
 
     public void GoneUpdate() {
         int getText = int.Parse(goneText.text);
         getText++;
-        goneText.text = getText.ToString();    
+        goneText.text = getText.ToString();   
     }
 }

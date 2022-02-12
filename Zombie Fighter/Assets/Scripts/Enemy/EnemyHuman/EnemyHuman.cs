@@ -208,6 +208,7 @@ public class EnemyHuman : EnemyMaleZombie
         PlayZombieBornEffect();
         myAnim.SetTrigger("Gone");
         myCanvas.GoneUpdate();
+        healthBar.SetHealth(healthBar.GetHealth() + 1.0f);
         Destroy(this.gameObject);
     }
 

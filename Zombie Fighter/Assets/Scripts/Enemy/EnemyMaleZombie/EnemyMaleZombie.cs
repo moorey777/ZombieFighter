@@ -11,6 +11,7 @@ public class EnemyMaleZombie : MonoBehaviour
     public Rigidbody2D myRigi;
 
     public Canvas myCanvas;
+    public HealthBar healthBar;
 
     protected Animator myAnim;
     protected Vector3 originPosition, turnPoint;
