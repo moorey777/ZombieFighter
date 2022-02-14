@@ -72,8 +72,8 @@ public class EnemyHuman : EnemyMaleZombie
             }
             else
             {
-                // if (isAfterBattleCheck)
-                // {
+                if (isAfterBattleCheck)
+                {
                     // ������ת��
                     // if (turnPoint == targetPosition)
                     // {
@@ -83,18 +83,19 @@ public class EnemyHuman : EnemyMaleZombie
                     // {
                     //     StartCoroutine(TurnRight(false));
                     // }
+                    StartCoroutine(TurnRight(true));
 
-                //     isAfterBattleCheck = false;
-                // }
+                    isAfterBattleCheck = false;
+                }
             }
 
-            if (transform.position.x == targetPosition.x)
-            {
-                myAnim.SetTrigger("Idle");
-                // turnPoint = originPosition;
-                // StartCoroutine(TurnRight(false));
-                isFirstTimeIdle = false;
-            }
+            // if (transform.position.x == targetPosition.x)
+            // {
+            //     myAnim.SetTrigger("Idle");
+            //     // turnPoint = originPosition;
+            //     // StartCoroutine(TurnRight(false));
+            //     isFirstTimeIdle = false;
+            // }
             // else if (transform.position.x == originPosition.x)
             // {
             //     if (!isFirstTimeIdle)
@@ -119,6 +120,13 @@ public class EnemyHuman : EnemyMaleZombie
                 myRigi.AddForce(Vector2.up * 2, ForceMode2D.Impulse);
                 StartCoroutine("AfterGone");
 
+            } else if (transform.position.x == originPosition.x)
+            {
+                if (!isFirstTimeIdle)
+                {
+                    myAnim.SetTrigger("Idle");
+                }
+                StartCoroutine(TurnRight(true));
             }
         }
         else
