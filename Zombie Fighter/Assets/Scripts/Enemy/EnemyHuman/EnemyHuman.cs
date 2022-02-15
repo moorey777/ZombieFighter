@@ -7,14 +7,13 @@ public class EnemyHuman : EnemyMaleZombie
 {
 
     
-    
-
+    private float curTime;
     private void Awake()
     {
         myAnim = GetComponent<Animator>();
         myCollider = GetComponent<BoxCollider2D>();
         myCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-
+        GlobalInfo globalInfo = new GlobalInfo();
         mySward=transform.GetChild(0).GetComponent<BoxCollider2D>();
         mySr = GetComponent<SpriteRenderer>();
         myPlayer = GameObject.Find("Player");
@@ -39,7 +38,13 @@ public class EnemyHuman : EnemyMaleZombie
     // Update is called once per frame
     void Update()
     {
-        MoveAndAttack();
+        // int randomTime = System.Random.Next(0,60);
+        curTime = Time.time;
+        if (curTime - myCanvas.lastTime >= enterTime) {
+            myRigi.gravityScale = 2.0f;
+            MoveAndAttack();
+        } 
+       
     }
 
     protected override void MoveAndAttack()
@@ -113,13 +118,14 @@ public class EnemyHuman : EnemyMaleZombie
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, mySpeed * Time.deltaTime);
             }
             if (transform.position.x == targetPosition.x) {
-                isAlive = false;
+                myRigi.gravityScale = 0f;
                 myCollider.enabled = false;
+                myCollider.isTrigger = false;
                 mySward.enabled = false;
-                myAnim.SetTrigger("Gone");
+                isAlive = false;
                 myRigi.AddForce(Vector2.up * 2, ForceMode2D.Impulse);
+                myAnim.SetTrigger("Gone");
                 StartCoroutine("AfterGone");
-
             } else if (transform.position.x == originPosition.x)
             {
                 if (!isFirstTimeIdle)

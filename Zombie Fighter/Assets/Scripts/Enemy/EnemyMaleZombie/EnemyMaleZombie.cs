@@ -9,6 +9,7 @@ public class EnemyMaleZombie : MonoBehaviour
     public GameObject attackCollider;
     public int enemyLife;
     public Rigidbody2D myRigi;
+    public int enterTime;
 
     public Canvas myCanvas;
     public HealthBar healthBar;

@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\HealthBar.cs" />
      <Compile Include="Assets\Scripts\Canvas.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerButtonCollider.cs" />
+     <Compile Include="Assets\Scripts\GlobalInfo.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyFemaleZombie\EnemyFemaleZombie.cs" />
      <Compile Include="Assets\Scripts\Player\AttackCollider.cs" />

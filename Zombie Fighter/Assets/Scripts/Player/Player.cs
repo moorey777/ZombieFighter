@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class Player : MonoBehaviour
 {
-    // ½ÇÉ«ÒÆ¶¯ËÙ¶È
+    // ï¿½ï¿½É«ï¿½Æ¶ï¿½ï¿½Ù¶ï¿½
     public float mySpeed;
     public float jumpForce;
     public GameObject attackCollider, kunaiPrefab;
+    public System.DateTime gameStartTime;
 
 
     float kunaiDistance;
     int playerLife;
-
+    public Canvas myCanvas;
     [HideInInspector]
     public Animator myAnim;
     public Rigidbody2D myRigi;
@@ -24,22 +26,25 @@ public class Player : MonoBehaviour
 
     public AudioClip[] myAudioClip;
     AudioSource myAudioSource;
+
+
     // Start is called before the first frame update
-    // StartÖ®ºóµÚÒ»¸öÖ´ÐÐµÄº¯Êý
+    // StartÖ®ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ö´ï¿½ÐµÄºï¿½ï¿½ï¿½
     private void Awake()
     {
+        gameStartTime = System.DateTime.Now;
         myAnim = GetComponent<Animator>();
         myRigi = GetComponent<Rigidbody2D>();
         mySr = GetComponent<SpriteRenderer>();
         myAudioSource = GetComponent<AudioSource>();
-
+myCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         isJumpPressed = false;
         canJump = true;
         isAttack = false;
         isHurt = false;
         canBeHurt = true;
 
-        playerLife = 3;
+        playerLife = 10;
     }
 
 
@@ -58,18 +63,18 @@ public class Player : MonoBehaviour
             canJump = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.G) && isHurt == false)
-        {
-            myAnim.SetTrigger("AttackThrow");
-            isAttack = true;
-            canJump = false;
+        // if(Input.GetKeyDown(KeyCode.G) && isHurt == false)
+        // {
+        //     myAnim.SetTrigger("AttackThrow");
+        //     isAttack = true;
+        //     canJump = false;
             
-        }
+        // }
     }
 
     private void FixedUpdate()
     {
-        // °´×ó¼ü»Ø´«¸ºÊý¸¡µãÊý£¬°´ÓÒ¼ü»Ø´«ÕýÊý¸¡µãÊý
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         float a = Input.GetAxisRaw("Horizontal");
 
         if(isAttack || isHurt)
@@ -83,7 +88,7 @@ public class Player : MonoBehaviour
         }
         else if (a < 0)
         {
-            // °´×ó¼ü¿ØÖÆ×ªÏò
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
 
@@ -112,9 +117,10 @@ public class Player : MonoBehaviour
             playerLife--;
             if(playerLife >= 1)
             {
+                StartCoroutine("StartTrack");
                 isHurt = true;
                 canBeHurt = false;
-                mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 0.5f); // ÊÜÉËÊ±¸Ä±äÍ¸Ã÷¶È
+                mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 0.5f); // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä±ï¿½Í¸ï¿½ï¿½ï¿½ï¿½
                 myAnim.SetBool("Hurt", true);
 
 
@@ -127,7 +133,7 @@ public class Player : MonoBehaviour
                     myRigi.velocity = new Vector2(2.5f, 10.0f);
                 }
 
-
+                
                 StartCoroutine("SetIsHurtFalse");
             }
             else if(playerLife < 1)
@@ -154,10 +160,10 @@ public class Player : MonoBehaviour
         isHurt = false;
         myAnim.SetBool("Hurt", false);
 
-        // ÎÞµÐ×´Ì¬
+        // ï¿½Þµï¿½×´Ì¬
         yield return new WaitForSeconds(1.0f);
         canBeHurt = true;
-        mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 1.0f); // ÊÜÉËÊ±¸Ä±äÍ¸Ã÷¶È
+        mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 1.0f); // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä±ï¿½Í¸ï¿½ï¿½ï¿½ï¿½
     }
 
     public void PlayScratchEffect()
@@ -172,16 +178,17 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // ºÍOnTriggerEnter2D Ò»Ñù£¬ÎªÁË·ÀÖ¹Íæ¼ÒÒ»Ö±Õ¾ÔÚ¹ÖÎïÀïÃæ²»ÊÕµ½ÉËº¦
+        // ï¿½ï¿½OnTriggerEnter2D Ò»ï¿½ï¿½ï¿½ï¿½Îªï¿½Ë·ï¿½Ö¹ï¿½ï¿½ï¿½Ò»Ö±Õ¾ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ²»ï¿½Õµï¿½ï¿½Ëºï¿½
         if (collision.tag == "Enemy" && isHurt == false && canBeHurt == true)
         {
             myAudioSource.PlayOneShot(myAudioClip[0]);
             playerLife--;
             if (playerLife >= 1)
             {
+                StartCoroutine("StartTrack");
                 isHurt = true;
                 canBeHurt = false;
-                mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 0.5f); // ÊÜÉËÊ±¸Ä±äÍ¸Ã÷¶È
+                mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 0.5f); // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä±ï¿½Í¸ï¿½ï¿½ï¿½ï¿½
                 myAnim.SetBool("Hurt", true);
 
 
@@ -207,7 +214,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // ÊÜÉËµÄµÚÒ»¸öFrameµ÷ÓÃº¯Êý
+    // ï¿½ï¿½ï¿½ËµÄµï¿½Ò»ï¿½ï¿½Frameï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½
     public void SetIsAttackFalse()
     {
         isAttack = false;
@@ -222,6 +229,18 @@ public class Player : MonoBehaviour
         myAnim.ResetTrigger("Attack");
         myAnim.ResetTrigger("AttackThrow");
         attackCollider.SetActive(false);
+    }
+
+    public void StartTrack() {
+                System.TimeSpan duration = System.DateTime.Now - gameStartTime;
+                // myCanvas.debug(System.Convert.ToInt64(duration.TotalSeconds).ToString());
+                AnalyticsResult analyticsResult = Analytics.CustomEvent(
+                    "Death",
+                    new Dictionary<string, object>
+                    {
+                        { "Time", System.Convert.ToInt64(duration.TotalSeconds)}
+                    }
+                );
     }
 
 
