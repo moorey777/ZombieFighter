@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     [HideInInspector]
     public Animator myAnim;
+    protected GameObject[] zombies;
     public Rigidbody2D myRigi;
     SpriteRenderer mySr;
 
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
         canBeHurt = true;
 
         playerLife = 3;
+        zombies = GameObject.FindGameObjectsWithTag ("Enemy");
     }
 
 
@@ -53,13 +55,23 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.T) && isHurt == false)
         {
+            foreach (GameObject zombie in zombies) {
+                Animator ani = zombie.GetComponent<Animator>();
+                ani.SetTrigger("ZombieAttack");
+            }
             myAnim.SetTrigger("Attack");
+            
+            
             isAttack = true;
             canJump = false;
         }
 
         if(Input.GetKeyDown(KeyCode.G) && isHurt == false)
         {
+            foreach (GameObject zombie in zombies) {
+                Animator ani = zombie.GetComponent<Animator>();
+                ani.SetTrigger("ZombieAttack");
+            }
             myAnim.SetTrigger("AttackThrow");
             isAttack = true;
             canJump = false;

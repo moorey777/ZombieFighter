@@ -131,15 +131,38 @@ public class EnemyHuman : EnemyMaleZombie
 
             }
 
-            if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("ZombieWalk"))  // 当僵尸走路动画为true时
-            {
-                transform.position = Vector3.MoveTowards(transform.position, turnPoint, mySpeed * Time.deltaTime); // 移动敌人 
-            }
+            StartCoroutine(follow());
+            
 
         }
     }
 
+    protected IEnumerator follow()
+    {
+        yield return new WaitForSeconds(2.0f);
+        if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("ZombieWalk"))  // 当僵尸走路动画为true时
+            {
+                //transform.position = Vector3.MoveTowards(transform.position, turnPoint, mySpeed * Time.deltaTime); // 移动敌人 
+                if (myPlayer.transform.position.x <= transform.position.x)
+                {
+                    transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                }
+                transform.position = Vector3.MoveTowards(transform.position, myPlayer.transform.position, mySpeed * Time.deltaTime);
+                if (myPlayer.transform.position.x == transform.position.x) {
+                    myAnim.SetTrigger("AfterDieIdle");
+                    if(myPlayer.transform.localScale.x < 0) {
+                        transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                    } else {
+                        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    }
+                }
 
+            }
+    }
     
 
 

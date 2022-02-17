@@ -57,7 +57,7 @@ public class EnemyMaleZombie : MonoBehaviour
     {
         if (isAlive && canBeHurt)
         {
-            // ¹¥»÷
+            // Â¹Â¥Â»Ã·
             if (Vector3.Distance(myPlayer.transform.position, transform.position) < 1.3f)
             {
                 if (myPlayer.transform.position.x <= transform.position.x)
@@ -83,7 +83,7 @@ public class EnemyMaleZombie : MonoBehaviour
             {
                 if (isAfterBattleCheck)
                 {
-                    // ¹¥»÷ºó×ªÏò
+                    // Â¹Â¥Â»Ã·ÂºÃ³Ã—ÂªÃÃ²
                     if (turnPoint == targetPosition)
                     {
                         StartCoroutine(TurnRight(false));
@@ -116,9 +116,9 @@ public class EnemyMaleZombie : MonoBehaviour
                 StartCoroutine(TurnRight(false));
             }
 
-            if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("Walk"))  // µ±×ßÂ·¶¯»­ÎªÕæµÄÊ±ºò
+            if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("Walk"))  // ÂµÂ±Ã—ÃŸÃ‚Â·Â¶Â¯Â»Â­ÃŽÂªÃ•Ã¦ÂµÃ„ÃŠÂ±ÂºÃ²
             {
-                transform.position = Vector3.MoveTowards(transform.position, turnPoint, mySpeed * Time.deltaTime); // ÒÆ¶¯µÐÈË 
+                transform.position = Vector3.MoveTowards(transform.position, turnPoint, mySpeed * Time.deltaTime); // Ã’Ã†Â¶Â¯ÂµÃÃˆÃ‹ 
             }
         }
         else
@@ -144,13 +144,46 @@ public class EnemyMaleZombie : MonoBehaviour
                 StartCoroutine(TurnRight(false));
 
             }
+           
 
-            if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("ZombieWalk"))  // µ±½©Ê¬×ßÂ·¶¯»­ÎªtrueÊ±
-            {
-                transform.position = Vector3.MoveTowards(transform.position, turnPoint, mySpeed * Time.deltaTime); // ÒÆ¶¯µÐÈË 
-            }
+            StartCoroutine(follow());
+
+            
             
         }
+    }
+     protected IEnumerator follow()
+    {
+        yield return new WaitForSeconds(2.0f);
+        if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("ZombieWalk"))  // ÂµÂ±Â½Â©ÃŠÂ¬Ã—ÃŸÃ‚Â·Â¶Â¯Â»Â­ÃŽÂªtrueÃŠÂ±
+            {
+                //transform.position = Vector3.MoveTowards(transform.position, turnPoint, mySpeed * Time.deltaTime); // Ã’Ã†Â¶Â¯ÂµÃÃˆÃ‹ 
+                if (myPlayer.transform.position.x <= transform.position.x)
+                {
+                    transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                }
+                Vector3 position = myPlayer.transform.position;
+                if(myPlayer.transform.localScale.x < 0) {
+                        position.x = position.x + 1.0f;
+                    } else {
+                        position.x = position.x - 1.0f;
+                }
+
+                transform.position = Vector3.MoveTowards(transform.position, position, mySpeed * Time.deltaTime);
+                if (position.x == transform.position.x) {
+                    myAnim.SetTrigger("AfterDieIdle");
+                    if(myPlayer.transform.localScale.x < 0) {
+                        transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                    } else {
+                        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    }
+                }
+
+            }
     }
 
 
