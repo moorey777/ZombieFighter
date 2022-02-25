@@ -8,6 +8,7 @@ public class EnemyMaleZombie : MonoBehaviour
     public float mySpeed;
     public GameObject attackCollider;
     public int enemyLife;
+    public Canvas canvas;
 
     protected Animator myAnim;
     protected Vector3 originPosition, turnPoint;
@@ -16,6 +17,10 @@ public class EnemyMaleZombie : MonoBehaviour
 
 
     protected GameObject myPlayer;
+    protected GameObject[] myEnemies;
+    protected GameObject[] myZombies;
+
+    public int zombieId;
 
     protected BoxCollider2D myCollider, mySward;
     protected SpriteRenderer mySr;
@@ -30,6 +35,8 @@ public class EnemyMaleZombie : MonoBehaviour
         mySward = transform.GetChild(0).GetComponent<BoxCollider2D>();
         mySr = GetComponent<SpriteRenderer>();
         myPlayer = GameObject.Find("Player");
+        
+
         myAudioSource = GetComponent<AudioSource>();
         originPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
@@ -37,27 +44,30 @@ public class EnemyMaleZombie : MonoBehaviour
         isAfterBattleCheck = false;
         isAlive = true;
         isdieWalkLeft = true;
-        canBeHurt=true;
-        isFirstZombieWalk=true;
+        canBeHurt = true;
+        isFirstZombieWalk = true;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         MoveAndAttack();
     }
 
+    // human attack
     protected virtual void MoveAndAttack()
     {
         if (isAlive && canBeHurt)
         {
-            // 攻击
+            myZombies = GameObject.FindGameObjectsWithTag("Zombie");
+            // ???÷
             if (Vector3.Distance(myPlayer.transform.position, transform.position) < 1.3f)
             {
                 if (myPlayer.transform.position.x <= transform.position.x)
@@ -79,11 +89,56 @@ public class EnemyMaleZombie : MonoBehaviour
                 isAfterBattleCheck = true;
                 return;
             }
+            else if(myZombies.Length > 0)
+            {
+                foreach (GameObject zombie in myZombies)
+                {
+                    if (Vector3.Distance(zombie.transform.position, transform.position) < 0.5f)
+                    {
+
+                        if (zombie.transform.position.x <= transform.position.x)
+                        {
+                            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                        }
+                        else
+                        {
+                            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        }
+                        if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                        {
+                            return;
+                        }
+                        //if (!myAudioSource.isPlaying) myAudioSource.PlayOneShot(myAudioClip[1]);
+                        myAnim.SetTrigger("Attack");
+
+                        isAfterBattleCheck = true;
+                        return;
+                    }
+                    else
+                    {
+                        if (isAfterBattleCheck)
+                        {
+                            // ???÷?ó×??ò
+                            if (turnPoint == targetPosition)
+                            {
+                                StartCoroutine(TurnRight(false));
+                            }
+                            else if (turnPoint == originPosition)
+                            {
+                                StartCoroutine(TurnRight(true));
+                            }
+
+                            isAfterBattleCheck = false;
+                        }
+                    }
+
+                }
+            }
             else
             {
                 if (isAfterBattleCheck)
                 {
-                    // 攻击后转向
+                    // ???÷?ó×??ò
                     if (turnPoint == targetPosition)
                     {
                         StartCoroutine(TurnRight(false));
@@ -116,13 +171,58 @@ public class EnemyMaleZombie : MonoBehaviour
                 StartCoroutine(TurnRight(false));
             }
 
-            if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("Walk"))  // 当走路动画为真的时候
+            if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("Walk"))  // ?±×??·???????????±?ò
             {
-                transform.position = Vector3.MoveTowards(transform.position, turnPoint, mySpeed * Time.deltaTime); // 移动敌人 
+                transform.position = Vector3.MoveTowards(transform.position, turnPoint, mySpeed * Time.deltaTime); // ???????? 
             }
         }
         else
         {
+            myEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject enemy in myEnemies)
+            {
+                if (Vector3.Distance(enemy.transform.position, transform.position) < 1.3f)
+                {
+
+                    if (enemy.transform.position.x <= transform.position.x)
+                    {
+                        transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                    }
+                    else
+                    {
+                        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    }
+                    if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("ZombieAttack"))
+                    {
+                        return;
+                    }
+                    if (!myAudioSource.isPlaying) myAudioSource.PlayOneShot(myAudioClip[1]);
+                    myAnim.SetTrigger("ZombieAttack");
+
+                    isAfterBattleCheck = true;
+                    return;
+                }
+                else
+                {
+                    if (isAfterBattleCheck)
+                    {
+                        //???÷?ó×??ò
+                        if (turnPoint == targetPosition)
+                        {
+                            StartCoroutine(TurnRight(false));
+                        }
+                        else if (turnPoint == originPosition)
+                        {
+                            StartCoroutine(TurnRight(true));
+                        }
+
+                        isAfterBattleCheck = false;
+                    }
+                }
+
+            }
+
+
             if (isFirstZombieWalk)
             {
                 transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
@@ -131,7 +231,7 @@ public class EnemyMaleZombie : MonoBehaviour
             if (transform.position.x == dieLeftPosition.x)
             {
                 myAnim.SetTrigger("AfterDieIdle");
-          
+
                 turnPoint = dieRightPosition;
                 StartCoroutine(TurnRight(true));
 
@@ -139,17 +239,55 @@ public class EnemyMaleZombie : MonoBehaviour
             else if (transform.position.x == dieRightPosition.x)
             {
                 myAnim.SetTrigger("AfterDieIdle");
-     
+
                 turnPoint = dieLeftPosition;
                 StartCoroutine(TurnRight(false));
-
             }
 
-            if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("ZombieWalk"))  // 当僵尸走路动画为true时
+
+            StartCoroutine(Follow());
+
+
+
+        }
+    }
+    protected IEnumerator Follow()
+    {
+        yield return new WaitForSeconds(1.0f);
+        if (myAnim.GetCurrentAnimatorStateInfo(0).IsName("ZombieWalk"))  // ?±????×??·??????true?±
+        {
+            if (myPlayer.transform.position.x <= transform.position.x)
             {
-                transform.position = Vector3.MoveTowards(transform.position, turnPoint, mySpeed * Time.deltaTime); // 移动敌人 
+                transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
             }
-            
+            else
+            {
+                transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
+            Vector3 position = myPlayer.transform.position;
+            if (myPlayer.transform.localScale.x < 0)
+            {
+                position.x = position.x + 1.0f * zombieId;
+            }
+            else
+            {
+                position.x = position.x - 1.0f * zombieId;
+            }
+
+            transform.position = Vector3.MoveTowards(transform.position, position, mySpeed * Time.deltaTime);
+            if (position.x == transform.position.x)
+            {
+                myAnim.SetTrigger("AfterDieIdle");
+                if (myPlayer.transform.localScale.x < 0)
+                {
+                    transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                }
+            }
+
         }
     }
 
@@ -157,7 +295,7 @@ public class EnemyMaleZombie : MonoBehaviour
     protected IEnumerator TurnRight(bool turnRight)
     {
         yield return new WaitForSeconds(2.0f);
-        if(turnRight)
+        if (turnRight)
         {
             transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
@@ -181,38 +319,52 @@ public class EnemyMaleZombie : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "PlayerAttack" && canBeHurt == true)
+        //Debug.Log(collision.tag);
+        //Debug.Log(isAlive);
+        if (collision.tag == "PlayerAttack" && canBeHurt == true)
         {
+           
             myAudioSource.PlayOneShot(myAudioClip[0]);
             canBeHurt = false;
             enemyLife--;
-            if(enemyLife >= 1)
+            if (enemyLife >= 1)
             {
                 myAnim.SetTrigger("Hurt");
                 StartCoroutine("SetIsHurtFalse");
-
             }
-            else if(enemyLife < 1)
+            else if (enemyLife < 1)
             {
-                isAlive = false;
+                attackCollider.tag = "PlayerAttack";
+                //gameObject.tag = "Zombie";
                 myCollider.enabled = false;
-                mySward.enabled = false;
+                //mySward.enabled = false;
                 myAnim.SetTrigger("Die");
                 diePosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-                dieLeftPosition = new Vector3(Mathf.Max(transform.position.x-3,-9.5f), transform.position.y, transform.position.z);
-                dieRightPosition = new Vector3(Mathf.Min(transform.position.x + 3,8.0f), transform.position.y, transform.position.z);
+                dieLeftPosition = new Vector3(Mathf.Max(transform.position.x - 3, -9.5f), transform.position.y, transform.position.z);
+                dieRightPosition = new Vector3(Mathf.Min(transform.position.x + 3, 8.0f), transform.position.y, transform.position.z);
                 turnPoint = dieLeftPosition;
                 StartCoroutine("AfterDie");
+                myCollider.enabled = true;
+                gameObject.tag = "Zombie";
+                zombieId = Global.zombieNum++;
+
+                //canvas.
             }
         }
+        else if (collision.tag == "Enemy" && gameObject.tag == "Zombie")
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
     }
     IEnumerator SetIsHurtFalse()
     {
         yield return new WaitForSeconds(2.0f);
         canBeHurt = true;
-        
 
-       
+
+
     }
 
     IEnumerator AfterDie()
@@ -227,7 +379,7 @@ public class EnemyMaleZombie : MonoBehaviour
         mySr.material.color = new Color(1.0f, 1.0f, 1.0f, 1f);
 
         yield return new WaitForSeconds(2.0f);
-
+        isAlive = false;
     }
 
     public void PlayEnemyDeathEffect()

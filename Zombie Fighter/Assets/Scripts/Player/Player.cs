@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // 角色移动速度
+    // ????????????
     public float mySpeed;
     public float jumpForce;
     public GameObject attackCollider, kunaiPrefab;
@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     [HideInInspector]
     public Animator myAnim;
+    protected GameObject[] zombies;
     public Rigidbody2D myRigi;
     SpriteRenderer mySr;
 
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
     public AudioClip[] myAudioClip;
     AudioSource myAudioSource;
     // Start is called before the first frame update
-    // Start之后第一个执行的函数
+    // Start??ó????????????????
     private void Awake()
     {
         myAnim = GetComponent<Animator>();
@@ -45,34 +46,48 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && canJump == true && isHurt == false)
+        if (Input.GetKeyDown(KeyCode.Space) && canJump == true && isHurt == false)
         {
-            isJumpPressed =true;
+            isJumpPressed = true;
             canJump = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.T) && isHurt == false)
+        if (Input.GetKeyDown(KeyCode.T) && isHurt == false)
         {
+            zombies = GameObject.FindGameObjectsWithTag("Zombie");
+            foreach (GameObject zombie in zombies)
+            {
+                Animator ani = zombie.GetComponent<Animator>();
+                ani.SetTrigger("ZombieAttack");
+            }
             myAnim.SetTrigger("Attack");
+
+
             isAttack = true;
             canJump = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.G) && isHurt == false)
+        if (Input.GetKeyDown(KeyCode.G) && isHurt == false)
         {
+            zombies = GameObject.FindGameObjectsWithTag("Zombie");
+            foreach (GameObject zombie in zombies)
+            {
+                Animator ani = zombie.GetComponent<Animator>();
+                ani.SetTrigger("ZombieAttack");
+            }
             myAnim.SetTrigger("AttackThrow");
             isAttack = true;
             canJump = false;
-            
+
         }
     }
 
     private void FixedUpdate()
     {
-        // 按左键回传负数浮点数，按右键回传正数浮点数
+        // °?×ó?ü????????????????°????ü??????????????
         float a = Input.GetAxisRaw("Horizontal");
 
-        if(isAttack || isHurt)
+        if (isAttack || isHurt)
         {
             a = 0;
         }
@@ -83,13 +98,13 @@ public class Player : MonoBehaviour
         }
         else if (a < 0)
         {
-            // 按左键控制转向
+            // °?×ó?ü????×??ò
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
 
         myAnim.SetFloat("Run", Mathf.Abs(a));
 
-        if(isJumpPressed)
+        if (isJumpPressed)
         {
             myRigi.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isJumpPressed = false;
@@ -97,7 +112,7 @@ public class Player : MonoBehaviour
             myAnim.SetBool("Jump", true);
         }
 
-        if(!isHurt)
+        if (!isHurt)
         {
             myRigi.velocity = new Vector2(a * mySpeed, myRigi.velocity.y);
         }
@@ -106,15 +121,15 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Enemy" && isHurt == false && canBeHurt == true)
+        if (collision.tag == "Enemy" && isHurt == false && canBeHurt == true)
         {
             myAudioSource.PlayOneShot(myAudioClip[0]);
             playerLife--;
-            if(playerLife >= 1)
+            if (playerLife >= 1)
             {
                 isHurt = true;
                 canBeHurt = false;
-                mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 0.5f); // 受伤时改变透明度
+                mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 0.5f); // ?????±??±????÷??
                 myAnim.SetBool("Hurt", true);
 
 
@@ -130,7 +145,7 @@ public class Player : MonoBehaviour
 
                 StartCoroutine("SetIsHurtFalse");
             }
-            else if(playerLife < 1)
+            else if (playerLife < 1)
             {
                 isHurt = true;
                 isAttack = true;
@@ -140,7 +155,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if(collision.tag == "Item")
+        if (collision.tag == "Item")
         {
             myAudioSource.PlayOneShot(myAudioClip[1]);
             Destroy(collision.gameObject);
@@ -154,10 +169,10 @@ public class Player : MonoBehaviour
         isHurt = false;
         myAnim.SetBool("Hurt", false);
 
-        // 无敌状态
+        // ????×???
         yield return new WaitForSeconds(1.0f);
         canBeHurt = true;
-        mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 1.0f); // 受伤时改变透明度
+        mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 1.0f); // ?????±??±????÷??
     }
 
     public void PlayScratchEffect()
@@ -172,7 +187,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // 和OnTriggerEnter2D 一样，为了防止玩家一直站在怪物里面不收到伤害
+        // ??OnTriggerEnter2D ???ù??????·??????????±??????????????????????
         if (collision.tag == "Enemy" && isHurt == false && canBeHurt == true)
         {
             myAudioSource.PlayOneShot(myAudioClip[0]);
@@ -181,7 +196,7 @@ public class Player : MonoBehaviour
             {
                 isHurt = true;
                 canBeHurt = false;
-                mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 0.5f); // 受伤时改变透明度
+                mySr.color = new Color(mySr.color.r, mySr.color.g, mySr.color.b, 0.5f); // ?????±??±????÷??
                 myAnim.SetBool("Hurt", true);
 
 
@@ -207,7 +222,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // 受伤的第一个Frame调用函数
+    // ????????????Frame?÷??????
     public void SetIsAttackFalse()
     {
         isAttack = false;

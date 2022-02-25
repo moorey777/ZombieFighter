@@ -61,6 +61,8 @@
     <Compile Include="Assets\Scripts\Player\AttackCollider.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyMaleZombie\EnemyMaleZombie.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyHuman\EnemyHuman.cs" />
+    <Compile Include="Assets\Scripts\Global.cs" />
+    <Compile Include="Assets\Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

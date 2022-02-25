@@ -147,9 +147,10 @@ public class EnemyHuman : EnemyMaleZombie
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-      
+        Debug.Log("hit 2D");
         if (collision.tag == "PlayerAttack" && canBeHurt == true)
         {
+            Debug.Log("hit attack");
             myAudioSource.PlayOneShot(myAudioClip[0]);
             canBeHurt = false;
             enemyLife--;
@@ -198,14 +199,14 @@ public class EnemyHuman : EnemyMaleZombie
 
     }
 
-    public void PlayEnemyDeathEffect()
-    {
-        myAudioSource.PlayOneShot(myAudioClip[2]);
-    }
+    //public void PlayEnemyDeathEffect()
+    //{
+    //    myAudioSource.PlayOneShot(myAudioClip[2]);
+    //}
 
-    public void PlayZombieBornEffect()
-    {
-        myAudioSource.PlayOneShot(myAudioClip[3]);
-    }
+    //public void PlayZombieBornEffect()
+    //{
+    //    myAudioSource.PlayOneShot(myAudioClip[3]);
+    //}
 
 }
